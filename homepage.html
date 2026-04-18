@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cats.directory — Europe's Cat Community</title>
+  <meta name="description" content="Discover cat breeds, connect with local cat lovers, find lost and found cats, and explore cat-friendly businesses.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined:opsz,wght@20..48,100..700;0..1,-50..100&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #e77e23;
+      --primary-hover: #d36d16;
+      --primary-light: #fbead9;
+      --bg: #FFF8F0;
+      --bg-warm: #f3ede7;
+      --text: #1b140e;
+      --text-secondary: #97704e;
+      --surface: #ffffff;
+      --border: #f3ede7;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+      --shadow-lg: 0 10px 40px -10px rgba(0,0,0,0.08);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-2xl: 32px;
+      --radius-full: 9999px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ── Utilities ── */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      padding: 0 24px;
+      height: 40px;
+      font-size: 14px;
+      box-shadow: 0 4px 16px rgba(231,126,35,0.3);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(231,126,35,0.35);
+    }
+
+    .btn-ghost {
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+    }
+    .btn-ghost:hover { background: var(--bg-warm); }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+    }
+
+    /* ── Header ── */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      width: 100%;
+      background: rgba(255,248,240,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 22px;
+      transition: transform 0.2s;
+    }
+    .logo:hover .logo-icon { transform: scale(1.1); }
+
+    .logo-text {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .nav { display: flex; align-items: center; gap: 32px; }
+    .nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.15s;
+    }
+    .nav a:hover { color: var(--primary); }
+
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      padding: 40px 0 80px;
+    }
+
+    .hero-image {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s;
+    }
+    .hero-image:hover img { transform: scale(1.03); }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 40%, rgba(0,0,0,0.5) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 900;
+      color: white;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+
+    .search-bar {
+      width: 100%;
+      max-width: 560px;
+      background: white;
+      border-radius: var(--radius-full);
+      padding: 6px 6px 6px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.2s;
+    }
+    .search-bar:hover { transform: translateY(-2px); }
+
+    .search-bar input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      color: var(--text);
+      background: transparent;
+      height: 44px;
+    }
+    .search-bar input::placeholder { color: #aaa; }
+
+    .search-bar button {
+      background: var(--primary);
+      color: white;
+      height: 44px;
+      padding: 0 28px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 14px;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .search-bar button:hover { background: var(--primary-hover); }
+
+    .search-icon { color: #bbb; flex-shrink: 0; }
+
+    /* ── Section ── */
+    .section { padding: 48px 0; }
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .section-link {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s;
+    }
+    .section-link:hover { gap: 8px; }
+
+    /* ── Featured Cats ── */
+    .cats-scroll-wrapper {
+      position: relative;
+    }
+
+    .scroll-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      width: 52px;
+      height: 52px;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-lg);
+      font-size: 28px;
+      color: var(--text);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .scroll-btn:hover { transform: translateY(-50%) scale(1.1); color: var(--primary); }
+    .scroll-btn.left { left: 16px; }
+    .scroll-btn.right { right: 16px; }
+
+    .cats-track {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding: 8px 8px 24px;
+      scroll-snap-type: x mandatory;
+      no-scrollbar: ;
+    }
+
+    .cat-card {
+      flex: 0 0 300px;
+      height: 420px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      position: relative;
+      scroll-snap-align: center;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+    }
+
+    .cat-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s;
+    }
+    .cat-card:hover img { transform: scale(1.06); }
+
+    .cat-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px;
+      transition: background 0.2s;
+    }
+    .cat-card:hover .cat-card-overlay { background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.15) 60%, transparent 100%); }
+
+    .cat-name {
+      font-size: 28px;
+      font-weight: 900;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    .cat-info {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* ── Business Cards ── */
+    .biz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .biz-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .biz-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+
+    .biz-card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+    .biz-card:hover .biz-card-img { transform: scale(1.05); }
+
+    .biz-card-img-wrapper {
+      overflow: hidden;
+    }
+
+    .biz-card-body { padding: 20px; }
+
+    .biz-name {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      transition: color 0.15s;
+    }
+    .biz-card:hover .biz-name { color: var(--primary); }
+
+    .stars {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-bottom: 10px;
+    }
+
+    .star { color: var(--primary); font-size: 16px; }
+    .star.empty { color: #ddd; }
+
+    .review-count {
+      font-size: 12px;
+      color: #aaa;
+      margin-left: 4px;
+    }
+
+    .biz-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ── Article Cards ── */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 28px;
+    }
+
+    .article-card { cursor: pointer; }
+
+    .article-img-wrapper {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 14px;
+      aspect-ratio: 16/9;
+    }
+
+    .article-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+    .article-card:hover .article-img { transform: scale(1.05); }
+
+    .article-category {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .article-title {
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      transition: color 0.15s;
+    }
+    .article-card:hover .article-title { color: var(--primary); }
+
+    .article-excerpt {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--text);
+      color: white;
+      padding: 64px 0 40px;
+      margin-top: 48px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 56px;
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 12px;
+      max-width: 240px;
+      line-height: 1.6;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 17px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .footer-logo-icon {
+      color: var(--primary);
+      font-size: 24px;
+    }
+
+    .footer-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 14px;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 10px;
+      transition: color 0.15s;
+    }
+    .footer-col a:hover { color: var(--primary); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-socials a {
+      color: rgba(255,255,255,0.4);
+      font-size: 20px;
+      transition: color 0.15s;
+    }
+    .footer-socials a:hover { color: white; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { display: none; }
+      .header-inner { padding: 0 16px; }
+      .hero-image { height: 380px; border-radius: var(--radius-lg); }
+      .hero { padding: 24px 0 48px; }
+      .section { padding: 32px 0; }
+      .cats-track { padding: 8px 4px 20px; }
+      .cat-card { flex: 0 0 260px; height: 360px; }
+      .scroll-btn { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .biz-grid { grid-template-columns: 1fr; }
+      .articles-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">
+          <span class="material-symbols-outlined filled" style="font-size:22px">pets</span>
+        </div>
+        <span class="logo-text">Cats.directory</span>
+      </a>
+
+      <nav class="nav">
+        <a href="#">Home</a>
+        <a href="#">Features</a>
+        <a href="#">Resources</a>
+        <a href="#">Blog</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="#" class="btn btn-ghost" style="display:none.sm:block">Log In</a>
+        <button class="btn btn-primary">Sign Up</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-image">
+        <img
+          src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=1400&h=600&fit=crop&q=80"
+          alt="Fluffy white cat looking at camera"
+        >
+        <div class="hero-overlay">
+          <h1>Find the Purr-fect Match</h1>
+          <div class="search-bar">
+            <span class="material-symbols-outlined search-icon">search</span>
+            <input type="text" placeholder="Search for trainer, vet, breed...">
+            <button>Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Featured Cats ── -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-label">Meet the Stars</div>
+          <h2 class="section-title">Featured Cats</h2>
+        </div>
+        <a href="#" class="section-link">
+          View Directory <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cats-scroll-wrapper">
+      <button class="scroll-btn left" onclick="scrollCats(-1)" aria-label="Scroll left">
+        <span class="material-symbols-outlined">chevron_left</span>
+      </button>
+      <button class="scroll-btn right" onclick="scrollCats(1)" aria-label="Scroll right">
+        <span class="material-symbols-outlined">chevron_right</span>
+      </button>
+
+      <div class="cats-track no-scrollbar" id="catsTrack">
+        <div class="cat-card">
+          <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=550&fit=crop&q=80" alt="Luna — Persian cat">
+          <div class="cat-card-overlay">
+            <div class="cat-name">Luna</div>
+            <div class="cat-info">Persian · 3 Years</div>
+          </div>
+        </div>
+        <div class="cat-card">
+          <img src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=400&h=550&fit=crop&q=80" alt="Oliver — Tabby cat">
+          <div class="cat-card-overlay">
+            <div class="cat-name">Oliver</div>
+            <div class="cat-info">Tabby · 2 Years</div>
+          </div>
+        </div>
+        <div class="cat-card">
+          <img src="https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=400&h=550&fit=crop&q=80" alt="Simba — Bombay cat">
+          <div class="cat-card-overlay">
+            <div class="cat-name">Simba</div>
+            <div class="cat-info">Bombay · 4 Years</div>
+          </div>
+        </div>
+        <div class="cat-card">
+          <img src="https://images.unsplash.com/photo-1568043210943-0e8c4b6a0a4b?w=400&h=550&fit=crop&q=80" alt="Bella — Siamese cat">
+          <div class="cat-card-overlay">
+            <div class="cat-name">Bella</div>
+            <div class="cat-info">Siamese · 1 Year</div>
+          </div>
+        </div>
+        <div class="cat-card">
+          <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=400&h=550&fit=crop&q=80" alt="Milo — British Shorthair">
+          <div class="cat-card-overlay">
+            <div class="cat-name">Milo</div>
+            <div class="cat-info">British Shorthair · 5 Years</div>
+          </div>
+        </div>
+        <div class="cat-card">
+          <img src="https://images.unsplash.com/photo-1529257414772-1960b7bea4eb?w=400&h=550&fit=crop&q=80" alt="Chloe — Calico cat">
+          <div class="cat-card-overlay">
+            <div class="cat-name">Chloe</div>
+            <div class="cat-info">Calico · 2 Years</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Top Businesses ── -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Top Cat Businesses</h2>
+      </div>
+
+      <div class="biz-grid">
+        <div class="biz-card">
+          <div class="biz-card-img-wrapper">
+            <img class="biz-card-img" src="https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=400&h=200&fit=crop&q=80" alt="Veterinary clinic interior">
+          </div>
+          <div class="biz-card-body">
+            <div class="biz-name">Paws & Claws Vet</div>
+            <div class="stars">
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="review-count">(120 reviews)</span>
+            </div>
+            <p class="biz-desc">Providing compassionate care for your feline friends with state-of-the-art facilities.</p>
+          </div>
+        </div>
+
+        <div class="biz-card">
+          <div class="biz-card-img-wrapper">
+            <img class="biz-card-img" src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=400&h=200&fit=crop&q=80" alt="Cat grooming">
+          </div>
+          <div class="biz-card-body">
+            <div class="biz-name">Purrfect Groomers</div>
+            <div class="stars">
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star">star_half</span>
+              <span class="review-count">(85 reviews)</span>
+            </div>
+            <p class="biz-desc">Specialized grooming services for cats, including lion cuts and de-shedding treatments.</p>
+          </div>
+        </div>
+
+        <div class="biz-card">
+          <div class="biz-card-img-wrapper">
+            <img class="biz-card-img" src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400&h=200&fit=crop&q=80" alt="Cat food and treats">
+          </div>
+          <div class="biz-card-body">
+            <div class="biz-name">The Cat Pantry</div>
+            <div class="stars">
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="review-count">(210 reviews)</span>
+            </div>
+            <p class="biz-desc">Organic and premium cat food, treats, and accessories delivered to your door.</p>
+          </div>
+        </div>
+
+        <div class="biz-card">
+          <div class="biz-card-img-wrapper">
+            <img class="biz-card-img" src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=400&h=200&fit=crop&q=80" alt="Cat hotel">
+          </div>
+          <div class="biz-card-body">
+            <div class="biz-name">Kitty Hotel & Spa</div>
+            <div class="stars">
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star empty">star</span>
+              <span class="review-count">(42 reviews)</span>
+            </div>
+            <p class="biz-desc">Luxury boarding for your feline companion when you're away.</p>
+          </div>
+        </div>
+
+        <div class="biz-card">
+          <div class="biz-card-img-wrapper">
+            <img class="biz-card-img" src="https://images.unsplash.com/photo-1544568100-847a948585b9?w=400&h=200&fit=crop&q=80" alt="Cat sitting">
+          </div>
+          <div class="biz-card-body">
+            <div class="biz-name">Whisker Sitters</div>
+            <div class="stars">
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="review-count">(315 reviews)</span>
+            </div>
+            <p class="biz-desc">Reliable and loving cat sitting services in your own home.</p>
+          </div>
+        </div>
+
+        <div class="biz-card">
+          <div class="biz-card-img-wrapper">
+            <img class="biz-card-img" src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=200&fit=crop&q=80" alt="Cat training">
+          </div>
+          <div class="biz-card-body">
+            <div class="biz-name">SmartCat Training</div>
+            <div class="stars">
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star filled">star</span>
+              <span class="material-symbols-outlined star empty">star</span>
+              <span class="review-count">(56 reviews)</span>
+            </div>
+            <p class="biz-desc">Behavioral training and trick learning for cats of all ages.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Latest Articles ── -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Latest Articles</h2>
+      </div>
+
+      <div class="articles-grid">
+        <article class="article-card">
+          <div class="article-img-wrapper">
+            <img class="article-img" src="https://images.unsplash.com/photo-1621631187538-5c3b3e3d1b4c?w=500&h=280&fit=crop&q=80" alt="Cat food bowl">
+          </div>
+          <div class="article-category">Health</div>
+          <h3 class="article-title">Nutritional Needs for Senior Cats</h3>
+          <p class="article-excerpt">As cats age, their dietary requirements change significantly. Learn what to feed your elderly feline.</p>
+        </article>
+
+        <article class="article-card">
+          <div class="article-img-wrapper">
+            <img class="article-img" src="https://images.unsplash.com/photo-1561948955-570b957493f9?w=500&h=280&fit=crop&q=80" alt="Cat playing with feather toy">
+          </div>
+          <div class="article-category">Lifestyle</div>
+          <h3 class="article-title">Best Interactive Toys of 2024</h3>
+          <p class="article-excerpt">Keep your indoor cat active and entertained with our top picks for interactive toys.</p>
+        </article>
+
+        <article class="article-card">
+          <div class="article-img-wrapper">
+            <img class="article-img" src="https://images.unsplash.com/photo-1511044568932-338cba0f6e7b?w=500&h=280&fit=crop&q=80" alt="Cat scratching post">
+          </div>
+          <div class="article-category">Behavior</div>
+          <h3 class="article-title">Why Do Cats Scratch Furniture?</h3>
+          <p class="article-excerpt">Understanding the natural instinct behind scratching and how to redirect it properly.</p>
+        </article>
+
+        <article class="article-card">
+          <div class="article-img-wrapper">
+            <img class="article-img" src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500&h=280&fit=crop&q=80" alt="Kitten with vet">
+          </div>
+          <div class="article-category">Care</div>
+          <h3 class="article-title">First Vet Visit: What to Expect</h3>
+          <p class="article-excerpt">A comprehensive guide for new kitten owners preparing for their first veterinary appointment.</p>
+        </article>
+
+        <article class="article-card">
+          <div class="article-img-wrapper">
+            <img class="article-img" src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=500&h=280&fit=crop&q=80" alt="Two cats grooming">
+          </div>
+          <div class="article-category">Social</div>
+          <h3 class="article-title">Introducing a Second Cat</h3>
+          <p class="article-excerpt">Tips and tricks for expanding your feline family without causing stress or fights.</p>
+        </article>
+
+        <article class="article-card">
+          <div class="article-img-wrapper">
+            <img class="article-img" src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=500&h=280&fit=crop&q=80" alt="Cat looking out window">
+          </div>
+          <div class="article-category">Environment</div>
+          <h3 class="article-title">Creating a Cat-Friendly Home</h3>
+          <p class="article-excerpt">Vertical space, hiding spots, and other enrichment ideas to make your home a cat paradise.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="material-symbols-outlined filled footer-logo-icon">pets</span>
+            Cats.directory
+          </div>
+          <p>The ultimate community for cat lovers, owners, and businesses across Europe.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#">About Us</a>
+          <a href="#">Careers</a>
+          <a href="#">Contact</a>
+          <a href="#">Press</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="#">Blog</a>
+          <a href="#">Guides</a>
+          <a href="#">Help Center</a>
+          <a href="#">Partners</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2024 Cats.directory. All rights reserved.</span>
+        <div class="footer-socials">
+          <a href="#" aria-label="Facebook">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.468 2.53c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function scrollCats(dir) {
+      const track = document.getElementById('catsTrack');
+      const card = track.querySelector('.cat-card');
+      const cardWidth = card.offsetWidth + 20; // including gap
+      track.scrollBy({ left: cardWidth * dir * 2, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
